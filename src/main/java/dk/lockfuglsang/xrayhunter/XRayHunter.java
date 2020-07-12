@@ -4,12 +4,10 @@ import dk.lockfuglsang.xrayhunter.command.MainCommand;
 import dk.lockfuglsang.xrayhunter.coreprotect.CoreProtectHandler;
 import net.coreprotect.CoreProtect;
 import net.coreprotect.CoreProtectAPI;
-import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.java.JavaPlugin;
 
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
@@ -25,11 +23,6 @@ public class XRayHunter extends JavaPlugin {
         CoreProtectAPI coreProtectAPI = getCoreProtect();
         if (coreProtectAPI == null) {
             log.info("No valid CoreProtect plugin was found!");
-        }
-        try {
-            Metrics metrics = new Metrics(this);
-        } catch (Exception e) {
-            log.log(Level.WARNING, "Failed to submit metrics data", e);
         }
         this.api = coreProtectAPI;
         getCommand("xhunt").setExecutor(new MainCommand(this));

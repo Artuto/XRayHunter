@@ -18,9 +18,11 @@ public class PlayerStatsComparator implements Comparator<PlayerStats> {
             Material.EMERALD_ORE,
             Material.GOLD_ORE,
             Material.IRON_ORE,
-            Material.STONE
+            Material.STONE,
+            Material.ANCIENT_DEBRIS
     );
     public static final Map<Material, String> MAT_COLORS = new HashMap<>();
+
     static {
         MAT_COLORS.put(Material.DIAMOND_ORE, "§b");
         MAT_COLORS.put(Material.SPAWNER, "§0");
@@ -28,6 +30,7 @@ public class PlayerStatsComparator implements Comparator<PlayerStats> {
         MAT_COLORS.put(Material.GOLD_ORE, "§e");
         MAT_COLORS.put(Material.IRON_ORE, "§f");
         MAT_COLORS.put(Material.STONE, "§7");
+        MAT_COLORS.put(Material.ANCIENT_DEBRIS, "§c");
     }
 
     public static String getColor(Material mat) {

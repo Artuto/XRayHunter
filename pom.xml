@@ -121,16 +121,11 @@
                     <minimizeJar>true</minimizeJar>
                     <artifactSet>
                         <includes>
-                            <include>org.bstats:*</include>
                             <include>com.googlecode.gettext-commons:*</include>
                             <include>dk.lockfuglsang.minecraft:*</include>
                         </includes>
                     </artifactSet>
                     <relocations>
-                        <relocation>
-                            <pattern>org.bstats</pattern>
-                            <shadedPattern>dk.lockfuglsang.xrayhunter.metrics</shadedPattern>
-                        </relocation>
                         <relocation>
                             <pattern>dk.lockfuglsang.minecraft</pattern>
                             <shadedPattern>dk.lockfuglsang.xrayhunter.minecraft</shadedPattern>
@@ -166,21 +161,14 @@
         <dependency> <!-- Bukkit implementation -->
             <groupId>org.bukkit</groupId>
             <artifactId>bukkit</artifactId>
-            <version>1.13-R0.1-SNAPSHOT</version>
-            <optional>true</optional>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.bstats</groupId>
-            <artifactId>bstats-bukkit</artifactId>
-            <version>1.2</version>
-            <scope>compile</scope>
+            <version>1.16.1-R0.1-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.coreprotect</groupId>
             <artifactId>coreprotect</artifactId>
             <version>${coreprotect.version}</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
             <exclusions>
                 <exclusion>
                     <groupId>com.sk89q.worldedit</groupId>

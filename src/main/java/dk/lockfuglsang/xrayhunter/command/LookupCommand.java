@@ -52,6 +52,10 @@ class LookupCommand extends AbstractCommand {
         blockCount.put(blockId, blockCount.get(blockId) + 1);
     }
 
+    private String getBlockKey(CoreProtectAPI.ParseResult parse) {
+        return parse.worldName() + ":" + parse.getX() + "," + parse.getY() + "," + parse.getZ();
+    }
+
     private class LookupCallback extends Callback {
         private final CommandSender sender;
 
@@ -84,7 +88,7 @@ class LookupCommand extends AbstractCommand {
                     userPlacedBlocks.put(blockKey, Boolean.TRUE);
                     continue; // skip the rest for placements
                 }
-                if (actionId == CoreProtectHandler.ACTION_BREAK && !userPlacedBlocks.containsKey(blockKey)) {
+                if (actionId == CoreProtectHandler.ACTION_BREAK) {
                     updateMap(blockCount, blockType);
                     if (!playerCount.containsKey(parse.getPlayer())) {
                         playerCount.put(parse.getPlayer(), new HashMap<>());
@@ -131,9 +135,5 @@ class LookupCommand extends AbstractCommand {
             }
             sender.sendMessage(sb.toString().split("\n"));
         }
-    }
-
-    private String getBlockKey(CoreProtectAPI.ParseResult parse) {
-        return parse.worldName() + ":" + parse.getX() + "," + parse.getY() + "," + parse.getZ();
     }
 }

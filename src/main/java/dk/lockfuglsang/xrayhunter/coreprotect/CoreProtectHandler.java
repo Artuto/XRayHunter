@@ -1,6 +1,5 @@
 package dk.lockfuglsang.xrayhunter.coreprotect;
 
-import net.coreprotect.CoreProtect;
 import net.coreprotect.database.Database;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -24,7 +23,8 @@ public class CoreProtectHandler {
     public static final int ACTION_BREAK = 0;
     public static final int ACTION_PLACE = 1;
     private static final Logger log = Logger.getLogger(CoreProtectHandler.class.getName());
-    private static final List<CoreProtectAdaptor> adaptors = Arrays.<CoreProtectAdaptor>asList(
+    private static final List<CoreProtectAdaptor> adaptors = Arrays.asList(
+            new CoreProtectAdaptor_2_19_0(),
             new CoreProtectAdaptor_2_15_0(),
             new CoreProtectAdaptor_2_12_0(),
             new CoreProtectAdaptor_2_10_0(),
@@ -32,26 +32,23 @@ public class CoreProtectHandler {
     );
 
     public static void performLookup(final Plugin plugin, final CommandSender sender, final int stime, final List<Material> restrictBlocks, final List<Integer> excludeBlocks, final Callback callback) {
-        Bukkit.getScheduler().runTaskAsynchronously(plugin, new Runnable() {
-            @Override
-            public void run() {
-                try (Connection connection = Database.getConnection(true);Statement statement = connection.createStatement()) {
-                    List<Integer> action_list = new ArrayList();
-                    action_list.add(0); // ActionId = 0 - Break
-                    action_list.add(1); // ActionId = 1 - Place
-                    Location location = (sender instanceof Player) ? ((Player) sender).getLocation() : null;
-                    int now = (int) (System.currentTimeMillis() / 1000L);
-                    CoreProtectAdaptor adaptor = getAdaptor();
-                    if (adaptor != null) {
-                        List<String[]> data = adaptor.performLookup(statement, restrictBlocks, action_list, location, now - stime, location != null);
-                        callback.setData(data);
-                    } else {
-                        log.log(Level.WARNING, "Unable to find suitable CoreProtect adaptor!");
-                    }
-                    Bukkit.getScheduler().runTaskAsynchronously(plugin, callback);
-                } catch (Exception e) {
-                    log.log(Level.WARNING, "Unable to lookup data", e);
+        Bukkit.getScheduler().runTaskAsynchronously(plugin, () -> {
+            try (Connection connection = Database.getConnection(true); Statement statement = connection.createStatement()) {
+                List<Integer> action_list = new ArrayList();
+                action_list.add(0); // ActionId = 0 - Break
+                action_list.add(1); // ActionId = 1 - Place
+                Location location = (sender instanceof Player) ? ((Player) sender).getLocation() : null;
+                int now = (int) (System.currentTimeMillis() / 1000L);
+                CoreProtectAdaptor adaptor = getAdaptor();
+                if (adaptor != null) {
+                    List<String[]> data = adaptor.performLookup(statement, restrictBlocks, action_list, location, now - stime, location != null);
+                    callback.setData(data);
+                } else {
+                    log.log(Level.WARNING, "Unable to find suitable CoreProtect adaptor!");
                 }
+                Bukkit.getScheduler().runTaskAsynchronously(plugin, callback);
+            } catch (Exception e) {
+                log.log(Level.WARNING, "Unable to lookup data", e);
             }
         });
     }
