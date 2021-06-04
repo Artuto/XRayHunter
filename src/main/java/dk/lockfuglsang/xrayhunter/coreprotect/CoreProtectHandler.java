@@ -24,7 +24,7 @@ public class CoreProtectHandler {
     public static final int ACTION_PLACE = 1;
     private static final Logger log = Logger.getLogger(CoreProtectHandler.class.getName());
     private static final List<CoreProtectAdaptor> adaptors = Arrays.asList(
-            new CoreProtectAdaptor_2_19_0(),
+            new CoreProtectAdaptor_2_19_4(),
             new CoreProtectAdaptor_2_15_0(),
             new CoreProtectAdaptor_2_12_0(),
             new CoreProtectAdaptor_2_10_0(),

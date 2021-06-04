@@ -12,11 +12,11 @@ import java.sql.Statement;
 import java.util.Collections;
 import java.util.List;
 
-public class CoreProtectAdaptor_2_19_0 extends AbstractCoreProtectAdaptor implements CoreProtectAdaptor {
+public class CoreProtectAdaptor_2_19_4 extends AbstractCoreProtectAdaptor implements CoreProtectAdaptor {
     @Override
     public boolean isAvailable() {
         Plugin plugin = Bukkit.getPluginManager().getPlugin("CoreProtect");
-        return plugin != null && plugin.getDescription() != null && plugin.getDescription().getVersion().equals("19.0") &&
+        return plugin != null && plugin.getDescription().getVersion().equals("19.4") &&
                 getLookupClass() != null && getLookupMethod(getLookupClass()) != null;
     }
 
